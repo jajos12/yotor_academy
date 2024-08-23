@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import clsx from "clsx";
-import { validateSignUpField } from "@/lib/definitions";
+import { validateSignUpField } from "@/app/lib/definitions";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
@@ -40,7 +40,7 @@ const page = () => {
         const data = await response.json();
         if (data.body.message == "user exists") {
           toast({
-            title: "User Exists",
+            title: "Email already registered",
             description: "Please Log in as you have already registered before",
             variant: "destructive",
           });

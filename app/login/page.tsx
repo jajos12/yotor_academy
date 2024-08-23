@@ -1,6 +1,6 @@
 "use client";
 import { useToast } from "@/components/ui/use-toast";
-import { validateLoginField } from "@/lib/definitions";
+import { validateLoginField } from "@/app/lib/definitions";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -33,6 +33,10 @@ const page = () => {
       const res = await response.json();
       if (res.success) {
         router.push("/courses");
+      } else {
+        toast({
+          title: `${res?.error}`,
+        });
       }
     } catch (error) {
       toast({

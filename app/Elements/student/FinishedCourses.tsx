@@ -42,9 +42,9 @@ const NoCourses = () => {
 };
 
 const EnrolledCourses = () => {
-  const enrolledCourses = true;
+  const enrolledCourses = false;
   return (
-    <section className="flex flex-col items-center h-[500px] bg-gray-100 w-screen">
+    <section className="flex flex-col items-center bg-gray-100 w-screen p-5">
       <h1 className="text-white text-2xl font-bold m-5 bg-black w-[250px] text-center rounded-md">
         Finished Courses
       </h1>

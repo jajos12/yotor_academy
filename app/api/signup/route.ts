@@ -2,7 +2,7 @@ import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { MongoClient, Db, Collection, InsertOneResult } from "mongodb";
-import { sendVerificationEmail } from "@/lib/email";
+import { sendVerificationEmail } from "@/app/lib/email";
 
 interface User {
   full_name: string;

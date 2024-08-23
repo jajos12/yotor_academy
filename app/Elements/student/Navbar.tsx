@@ -12,6 +12,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { deleteSession } from "@/app/lib/session";
+import { useRouter } from "next/navigation";
 
 const Navbar = ({
   isToogled,
@@ -20,7 +22,12 @@ const Navbar = ({
   isToogled: Boolean;
   //   handleToogle: (isToogled: Boolean) => void;
 }) => {
+  const router = useRouter();
   const [menuClicked, setMenuClicked] = useState(false);
+  const logout = async () => {
+    deleteSession();
+    router.push("/login");
+  };
   return (
     <nav
       className={clsx(
@@ -90,7 +97,18 @@ const Navbar = ({
             {item}
           </Link>
         ))}
-
+        <Link
+          href="/login"
+          className={clsx(
+            "flex justify-center items-center rounded-[12px] px-3 py-1 text-nowrap  transition ease-in-out delay-150 hover:scale-110 hover:translate-y-1 hover:bg-black-300 hover:drop-shadow-sm hover:",
+            isToogled ? "bg-white text-black" : "bg-black text-white"
+          )}
+          onClick={() => {
+            logout();
+          }}
+        >
+          Log Out {"-->"}
+        </Link>
         <Image
           src={!isToogled ? "/LighToogle.svg" : "/DarkToogle.svg"}
           alt="toogleIcon"

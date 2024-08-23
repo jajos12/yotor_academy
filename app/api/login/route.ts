@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Db, MongoClient, ObjectId, Collection } from "mongodb";
+import { createSession } from "@/app/lib/session";
+// import { getSession, SessionData, setSession } from "@/lib/session";
 
 interface User {
   _id: ObjectId;
@@ -30,24 +32,45 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid password" }, { status: 400 });
     }
 
-    const tokenData = {
-      id: user._id.toString(),
-      username: user.full_name,
-      email: user.email,
+    const sessionData = {
+      user: {
+        id: user._id,
+        name: user.full_name,
+        email: user.email,
+        // expiresAt: Date.now() + 86400 * 1000,
+      },
     };
 
-    const token = jwt.sign(tokenData, process.env.JWT_SECRET!, {
-      expiresIn: "1d",
-    });
+    // Set the session in the response
+    // const session = setSession(NextResponse.next(), sessionData);
+    // const decrypted = getSession(request);
 
+    // const tokenData = {
+    //   id: user._id.toString(),
+    //   username: user.full_name,
+    //   email: user.email,
+    // };
+
+    // const token = jwt.sign(tokenData, process.env.JWT_SECRET!, {
+    //   expiresIn: "1d",
+    // });
+
+    const session: string = await createSession(user._id);
     const response = NextResponse.json({
       message: "Login successful",
       success: true,
-      token: token,
+      session,
     });
-    response.cookies.set("token", token, {
-      httpOnly: true,
-    });
+    // response.cookies.set("token", token, {
+    //   httpOnly: true,
+    // });
+    // response.cookies.set("session", `${session}`, {
+    //   httpOnly: true,
+    // });
+    // response.cookies.set("decrypted", `${decrypted}`, {
+    //   httpOnly: true,
+    // });
+
     return response;
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

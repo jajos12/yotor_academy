@@ -95,3 +95,7 @@ export const validateLoginField = (email: string, password: string) => {
     };
   }
 };
+
+export interface SessionPayload {
+  userId: string;
+}

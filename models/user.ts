@@ -1,6 +1,8 @@
 // models/user.js
 import mongoose from "mongoose";
 
+interface role {}
+
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true, minlength: 3, maxlength: 50 },
   email: {
@@ -13,6 +15,11 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true, minlength: 8, maxlength: 100 },
   verificationToken: { type: String },
   isVerified: { type: Boolean, default: false },
+  role: {
+    type: String,
+    enum: ["admin", "user", "manager"],
+    default: "user",
+  },
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
